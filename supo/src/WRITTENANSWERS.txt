@@ -1,0 +1,349 @@
+I'm so bad at github I hope you see this.
+
+1.2)  Compare and contrast a typical functional language and a typical imperative
+language.
+
+functional - you tell the program what you want it to do
+imperative - you tell the program what you want it to do and how
+
+
+1.3)  Identify the primitives, references, classes and objects in the following Java code:
+double d = 5.0;
+int i [] = {1 , 2 , 3 , 4};
+LinkedList < Double > l = new LinkedList < Double >() ;
+Double k = new Double () ;
+Tree t ;
+float f ;
+Computer c = null ;
+
+primitives: int, double, float
+references: l
+classes: Tree, Computer
+objects: t, c
+
+
+1.4)  Naming Conventions. The lecture notes contrast Python’s snake_case and
+Java’s CamelCase. Why is adhering to a language’s standard naming convention important? Provide a Java class StudentReportGenerator with one static final constant
+DEFAULT_YEAR set to 2025, one instance field reportTitle, and one method generateReport,
+all following Java conventions.
+
+Adhering to naming conventions is important as it allows developers to easily identify what a named identifier is supposed to represent when quickly reading over the code - especially important when working in teams.
+
+
+1.9) Explain why this code prints 0 rather than 7.
+    public class Test {
+        public int x = 0;
+        public void Test () {
+        x = 7;
+        }
+    public static void main ( String [] args ) {
+        Test t = new Test () ;
+        System . out . println ( t . x) ;
+    }
+}
+
+x is only set to 7 within the curly brackets in public void Test (), outside of that it remains unaltered as just 0
+
+
+2.1) Explain why we should use private state in conjunction with public getter
+and setter methods.
+
+So that we can still set and edit the private state, but under controlled rules.
+
+
+2.2) Python does not offer a private access modifier making everything public. Instead, programmers should follow the convention that a variable name should be prefixed
+with an underscore ("_") to signal it should not be accessed or edited externally. Discuss
+the advantages and disadvantages of this approach compared to Java.
+
+Advantages:
+- code is cleaner and easier to read for the developer
+- developers can still effectively use the functionality of public and private classes, it's just self-governed and requires them to execute common sense
+Disadvantages:
+- Developers who don't execute common sense risk accidentally modifying a private class in an inappropriate way
+- "_" can easily be accidentally removed or mistyped
+
+
+2.3) This question considers representing a 2D vector in Java.
+(a) Develop a mutable class Vector2D to embody the notion of a 2D vector based on floats
+(do not use Generics). At a minimum your class should support addition of two vectors;
+scalar product; normalisation and magnitude.
+
+Completed in Vector2D
+
+(b) What changes would be needed to make it immutable?
+
+change the code where the state of the vector is defined to be private instead of public.
+
+(c) Contrast the following prototypes for the addition method for both the (i) mutable, and
+(ii) immutable versions.
+
+• public void add (Vector2D v)
+works for mutable, adds v to this.
+returns void for immutable making it unusable as this can't be changed.
+
+• public Vector2D add (Vector2D v)
+works for mutable and immutable, for mutable it modifies this, for immutable it assigns the result of this added to v to a new Vector2D
+
+• public Vector2D add (Vector2D v1, Vector2D v2)
+Technically works for both, but weird; called on an existing/new Vector2D and then something is done with v1 and v2 to it??
+
+• public static Vector2D add (Vector2D v1, Vector2D v2)
+Same as last but more clear, v1 and v2 are added to create a NEW Vector2D. Works for both mutable and immutable.
+
+(d) How can you convey to a user of your class that it is immutable?
+
+by making it private
+
+
+2.4) You met the idea of linked lists in FoCS.
+(a) Write a class OOPLinkedList that encapsulates a linked list of integers. Your class should
+support the addition and removal of elements from the head, querying of the head element,
+obtaining the n
+th element and computing the length of the list. You may find it useful to
+first define a class OOPLinkedListElement to represent a single list element. Do not use
+Generics.
+
+Done in OOPLinkedList and OOPLinkedListElement
+
+(b) Give the UML class diagram for your code.
+
++-----------------------------------+
+|          OOPLinkedList            |
++-----------------------------------+
+| - hd: OOPLinkedListElement        |
++-----------------------------------+
+| + OOPLinkedList()                 |
+| + addHd(value: int): void         |
+| + getHd(): int                    |
+| + removeHd(): int                 |
+| + getNth(n: int): int             |
+| + getLength(): int                |
++-----------------------------------+
+                |
+                | 
+                v (1)
++-----------------------------------+
+|       OOPLinkedListElement        |
++-----------------------------------+
+| - x: int                          |
+| - next: OOPLinkedListElement      |
++-----------------------------------+
+| + OOPLinkedListElement(x, next)   |
+| + getX(): int                     |
+| + getNext(): OOPLinkedListElement |
+| + setNext(next): void             |
++-----------------------------------+
+
+
+2.5)  Single Responsibility Principle (SRP) The lecture notes discuss the Single Responsibility Principle (SRP). The following Report class violates SRP. Explain why, and
+refactor it into separate classes that better adhere to SRP and exhibit high cohesion.
+
+public class Report {
+    private String data ;
+public void fetchDataFromDatabase () {
+    System . out . println (" Fetching data ... ") ;
+    this . data = "raw data ";
+}
+public void parseXMLData () {
+    System . out . println (" Parsing data as XML ... ") ;
+    // logic to parse this . data
+}
+public void printToConsole () {
+    System . out . println (" --- REPORT ---") ;
+    System . out . println ( this . data ) ;
+    System . out . println (" --- END ---") ;
+}
+}
+
+Report is responsible for fetching data, parsing data, and printing data. This could be remedied by splitting these 3 into seperate classes and perhaps grouping them together as a package.
+
+
+2.6) Immutability and Records. The lecture notes introduce the record keyword (Java
+16+) as a concise way to create immutable classes.
+(a) Create an immutable class StudentRecord containing name, age and college without
+using record. Provide the class with a print() method that prints the details to
+the screen.
+
+Done in StudentRecord
+
+(b) Re-implement StudentRecord as a record.
+
+Also done there in comments beneath
+
+(c) The notes mention that a record automatically generates equals(), hashCode(),
+and toString(). Why is it critical that an immutable class used as a data carrier provides a correct, value-based implementation of equals() and hashCode()?
+(Hint: consider its use in a HashSet or as a key in a HashMap).
+
+If a machine can write it the language should probably provide it; all are functions a developer would want to use (especially in the case of hashCode as immutable objects are highly desired for HashMaps as mutable values could be changed and lost)
+
+
+2.7) In mathematics, a set of integers refers to a collection of integers that contains
+no duplicates. You typically want to insert numbers into a set and query whether the set
+contains numbers. One approach is to store the numbers in a binary search tree.
+(a) The text below describes a design for a set of integers. Draw out the UML diagram.
++-----------------------------------------------------+
+|                    SearchSet                        |
++-----------------------------------------------------+
+| -numElements: int                                   |
++-----------------------------------------------------+
+| +SearchSet()                                        |
+| +insert(int): void                                  |
+| +getNumElements(): int                              |
+| +contains(int): boolean                             |
++-----------------------------------------------------+
+                    |
+                    |
+                    |
+                    |
+                    |
+                    v (1)
++-----------------------------------------------------+
+|                  BinaryTreeNode                     |
++-----------------------------------------------------+
+| -value: int                                         |
++-----------------------------------------------------+
+| +BinaryTreeNode(int)                                |
+| +getValue(): int                                    |
+| +setValue(int): void                                |
+| +getLeft(): BinaryTreeNode                          |
+| +getRight(): BinaryTreeNode                         |
+| +setRight(BinaryTreeNode): void                     |
+| +setLeft(BinaryTreeNode): void                      |
++-----------------------------------------------------+
+
+idk what to do with these:
+SearchSet:
+ (relationship) -head (0..1) → BinaryTreeNode  
+BinaryTreeNode:
+ (relationship) -right (0..1) → BinaryTreeNode
+ (relationship) -left (0..1) → BinaryTreeNode
+
+(b) Implement this in Java, using the names of entities to decide what they should do. Make
+your main method test that the code works.
+(c) The BinaryTreeNode class can be reused for other solutions. Create a class FunctionalArray
+that uses BinaryTreeNode to create a functional array of ints. Your class should have a
+constructor that creates a tree of a given size (passed as an argument); a void set(int
+index, int value) method; and a int get(int index) method. You should make the
+functional array zero-indexed to match java’s normal arrays (i.e. the first element has index
+0). Requests for indices outside the limits should result in an exception.
+
+
+3.1) Pointers are problematic because they might not point to anything useful.
+A null reference doesn’t point to anything useful. So what is the advantage of using
+references over pointers?
+
+You can check if they reference something useful by checking if it == null or not, and references act as restricted pointers that prevent arbitrary memory assignment and corruption.
+
+
+3.2) Draw some simple diagrams to illustrate what happens with each step of the
+following Java code in memory:
+Person p = null ;
+Person p2 = new Person () ;
+p = p2 ;
+p2 = new Person () ;
+p = null ;
+
+p ----> null
+
+p2 ----> Person1
+
+
+p --------|
+          V
+p2 ----> Person1
+
+
+p ------> Person1
+
+p2 -----> Person2
+
+
+p ------> null
+
+p2 -----> Person2
+
+
+3.4) The notes mention the confusion over passing by value and reference. Write Java
+code to demonstrates that the variable declared by the code int[] test can be viewed
+as a reference that gets copied when passed as an argument.
+
+Not sure what int[] test is or where to find it. What code should I be writing???
+Every variable used in a function in Java has local scope and is a copy, meaning when using primitives, the copy made of it is a pass by value and is unable to edit the actual variable passed into the function outside the scope of the function. For references however, they point to a location in memory, and when that memory location is copied within the function it IS able to edit what is at that location in memory if called properly.
+
+
+4.1) A student wishes to create a class for a 3D vector and chooses to derive from
+the Vector2D class (i.e. public void Vector3D extends Vector2D). The argument is
+that a 3D vector is a "2D vector with some stuff added". Explain the conceptual misunderstanding here.
+
+The relationship between subclasses and their parent class is that the subclass IS a parent class. 3D Vectors however are NOT 2D Vectors. When inheriting attributes and methods from the parent such as dot product, cross product, determinant, these would not work with 3D vectors because the way they're calculated is different.
+
+
+4.2) If you don’t specify an access modifier when you declare a member field of a
+class, what does Java assign it? Demonstrate your answer by providing minimal Java
+examples that will and will not compile, as appropriate.
+
+it gets package private access, meaning any class in the same package can access the field.
+e.g.
+package1;
+public class A {
+    int x = 10;
+}
+
+public class B {
+    A a = new A();
+    y = a.x; // allowed!
+}
+
+
+4.4) Suggest UML class diagrams that could be used to represent the following.
+Think carefully about the directions of and multiplicities on your arrows.
+(a) A shop is composed of a series of departments, each with its own manager. There is also
+a store manager and many shop assistants. Each item sold has a price and a tax rate.
+(b) Vehicles are either motor-driven (cars, trucks, motorbikes, electric bikes) or human-powered
+(bikes, skateboards, scooters). All cars have 3 or 4 wheels and all bikes have two wheels.
+Every vehicle has an owner. Some vehicles must have road tax.
+
+Done in 4_4.jpg
+
+
+4.5) Consider the Java class below:
+package questions ;
+public class X {
+MODIFIER int value = 3;
+};
+Another class Y attempts to access the field value in an object of type X. Describe what happens
+at compilation and/or runtime for the range of MODIFIER possibilities (i.e. public, protected,
+private and unspecified) under the following circumstances:
+(a) Y subclasses X and is in the same package;
+public -> compiles
+package -> compiles
+protected -> compiles
+private -> fails
+
+(b) Y subclasses X and is in a different package;
+public -> compiles
+package -> fails
+protected -> compiles
+private -> fails
+
+(c) Y does not subclass X and is in the same package;
+public -> compiles
+package -> compiles
+protected -> compiles
+private -> fails
+
+(d) Y does not subclass X and is in a different package
+public -> compiles
+package -> fails
+protected -> fails
+private -> fails
+
+
+
+
+
+
+
+
+
+
