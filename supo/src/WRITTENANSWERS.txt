@@ -17,9 +17,13 @@ float f ;
 Computer c = null ;
 
 primitives: int, double, float
+James: d, f
 references: l
+James: + t, c, i
 classes: Tree, Computer
+James: + LinkedList, Double
 objects: t, c
+James: new Double(), new LinkedList, {1, 2, 3, 4}
 
 
 1.4)  Naming Conventions. The lecture notes contrast Python’s snake_case and
@@ -29,6 +33,7 @@ all following Java conventions.
 
 Adhering to naming conventions is important as it allows developers to easily identify what a named identifier is supposed to represent when quickly reading over the code - especially important when working in teams.
 
+James: Yes
 
 1.9) Explain why this code prints 0 rather than 7.
     public class Test {
@@ -44,12 +49,13 @@ Adhering to naming conventions is important as it allows developers to easily id
 
 x is only set to 7 within the curly brackets in public void Test (), outside of that it remains unaltered as just 0
 
+James: Yes; public void Test() is a method, and not a constructor
 
 2.1) Explain why we should use private state in conjunction with public getter
 and setter methods.
 
 So that we can still set and edit the private state, but under controlled rules.
-
+James: Yes; specifically it cannot be done outside of code in the class (that we have control over)
 
 2.2) Python does not offer a private access modifier making everything public. Instead, programmers should follow the convention that a variable name should be prefixed
 with an underscore ("_") to signal it should not be accessed or edited externally. Discuss
@@ -62,6 +68,7 @@ Disadvantages:
 - Developers who don't execute common sense risk accidentally modifying a private class in an inappropriate way
 - "_" can easily be accidentally removed or mistyped
 
+JameS: YEs - the real disadvantage is the lack of any safety control other than 'trust'
 
 2.3) This question considers representing a 2D vector in Java.
 (a) Develop a mutable class Vector2D to embody the notion of a 2D vector based on floats
@@ -93,6 +100,7 @@ Same as last but more clear, v1 and v2 are added to create a NEW Vector2D. Works
 (d) How can you convey to a user of your class that it is immutable?
 
 by making it private
+James: No, as discussed in supervision. This would make it invisible!
 
 
 2.4) You met the idea of linked lists in FoCS.
@@ -156,7 +164,7 @@ public void printToConsole () {
 }
 
 Report is responsible for fetching data, parsing data, and printing data. This could be remedied by splitting these 3 into seperate classes and perhaps grouping them together as a package.
-
+James: Yes
 
 2.6) Immutability and Records. The lecture notes introduce the record keyword (Java
 16+) as a concise way to create immutable classes.
@@ -176,6 +184,7 @@ and toString(). Why is it critical that an immutable class used as a data carrie
 
 If a machine can write it the language should probably provide it; all are functions a developer would want to use (especially in the case of hashCode as immutable objects are highly desired for HashMaps as mutable values could be changed and lost)
 
+James: Hopefully clear from supervision.
 
 2.7) In mathematics, a set of integers refers to a collection of integers that contains
 no duplicates. You typically want to insert numbers into a set and query whether the set
@@ -218,6 +227,8 @@ BinaryTreeNode:
  (relationship) -right (0..1) → BinaryTreeNode
  (relationship) -left (0..1) → BinaryTreeNode
 
+James: This is right. These are field values, so they go with -value / -numElements
+
 (b) Implement this in Java, using the names of entities to decide what they should do. Make
 your main method test that the code works.
 (c) The BinaryTreeNode class can be reused for other solutions. Create a class FunctionalArray
@@ -233,6 +244,8 @@ A null reference doesn’t point to anything useful. So what is the advantage of
 references over pointers?
 
 You can check if they reference something useful by checking if it == null or not, and references act as restricted pointers that prevent arbitrary memory assignment and corruption.
+
+James: Yes
 
 
 3.2) Draw some simple diagrams to illustrate what happens with each step of the
@@ -262,14 +275,16 @@ p ------> null
 
 p2 -----> Person2
 
+James: Yes, as covered in supervision.
 
 3.4) The notes mention the confusion over passing by value and reference. Write Java
 code to demonstrates that the variable declared by the code int[] test can be viewed
 as a reference that gets copied when passed as an argument.
 
 Not sure what int[] test is or where to find it. What code should I be writing???
-Every variable used in a function in Java has local scope and is a copy, meaning when using primitives, the copy made of it is a pass by value and is unable to edit the actual variable passed into the function outside the scope of the function. For references however, they point to a location in memory, and when that memory location is copied within the function it IS able to edit what is at that location in memory if called properly.
 
+Every variable used in a function in Java has local scope and is a copy, meaning when using primitives, the copy made of it is a pass by value and is unable to edit the actual variable passed into the function outside the scope of the function. For references however, they point to a location in memory, and when that memory location is copied within the function it IS able to edit what is at that location in memory if called properly.
+James: Yes...although better to say it copies the reference variable which 'refers' to the same target object. Technically the reference variable does not contain the memory location (but it can be helpful to think of it in this way).
 
 4.1) A student wishes to create a class for a 3D vector and chooses to derive from
 the Vector2D class (i.e. public void Vector3D extends Vector2D). The argument is
@@ -277,6 +292,7 @@ that a 3D vector is a "2D vector with some stuff added". Explain the conceptual 
 
 The relationship between subclasses and their parent class is that the subclass IS a parent class. 3D Vectors however are NOT 2D Vectors. When inheriting attributes and methods from the parent such as dot product, cross product, determinant, these would not work with 3D vectors because the way they're calculated is different.
 
+James: Absolutely. What about the other way round, sub-classing Vector2D from Vector3D?
 
 4.2) If you don’t specify an access modifier when you declare a member field of a
 class, what does Java assign it? Demonstrate your answer by providing minimal Java
@@ -294,6 +310,7 @@ public class B {
     y = a.x; // allowed!
 }
 
+// James: Yes...and if And B are in different packages, then this would not compile
 
 4.4) Suggest UML class diagrams that could be used to represent the following.
 Think carefully about the directions of and multiplicities on your arrows.
@@ -338,7 +355,7 @@ package -> fails
 protected -> fails
 private -> fails
 
-
+James: Yes
 
 
 

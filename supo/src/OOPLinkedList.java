@@ -5,6 +5,7 @@ public class OOPLinkedList {
         this.hd = null;
     }
 
+    // James: Good
     // adding elements
     public void addHd(int value) {
         this.hd = new OOPLinkedListElement(value, this.hd);
@@ -13,6 +14,7 @@ public class OOPLinkedList {
     // getting elements
     public int getHd() {
         if (this.hd == null) {
+            // James: Good error checking
             throw new IllegalStateException("empty list you joker");
         }
         return this.hd.getX();
